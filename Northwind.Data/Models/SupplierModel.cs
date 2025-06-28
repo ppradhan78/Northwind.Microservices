@@ -1,5 +1,5 @@
 ﻿namespace AspNetCoreIQ2025.Data.SimpleModels;
-public class SuppliersSampleModel
+public class SuppliersModel
 {
     public int SupplierID { get; set; }
     public string CompanyName { get; set; }
