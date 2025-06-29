@@ -7,7 +7,7 @@ namespace Northwind.API.Controllers.v1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    [ApiExplorerSettings(GroupName = "v1")] // 
+    [ApiExplorerSettings(GroupName = "v1")] 
     public class SuppliersController : ControllerBase
     {
         ISuppliersService _service;

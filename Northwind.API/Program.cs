@@ -3,9 +3,21 @@ using Northwind.Data.BusinessObject;
 using Northwind.Data.Data;
 using Northwind.Data.Mappers;
 using Northwind.Data.Services;
+using Polly.Extensions.Http;
+using Polly;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Northwind.API.Utlity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient("NorthwindClient", client =>
+{
+    //client.BaseAddress = new Uri("https://data-northwind.indigo.design/");
+    client.BaseAddress = new Uri("https://localhost:7030/api/v1/");
+})
+ .AddTransientHttpErrorPolicy(p =>
+        p.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2)))
+.AddPolicyHandler(RetryPolicies.GetRetryPolicy());
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -20,7 +32,11 @@ builder.Services.AddScoped<ISuppliersService, SuppliersService>();
 builder.Services.AddScoped<ISuppliersBo, SuppliersBo>();
 
 #endregion
+
+
+
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -75,6 +91,7 @@ if (app.Environment.IsDevelopment())
     }
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -82,3 +99,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+ 
