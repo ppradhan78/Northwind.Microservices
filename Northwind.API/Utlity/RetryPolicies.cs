@@ -40,18 +40,18 @@
         );
         }
 
-        public static IAsyncPolicy<HttpResponseMessage> GetResilientPolicy()
-        {
-            var retry = Policy
-                .Handle<HttpRequestException>()
-                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
+        //public static   IAsyncPolicy<HttpResponseMessage> GetResilientPolicy()
+        //{
+        //    var retry = Policy
+        //        .Handle<HttpRequestException>()
+        //        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2));
 
-            var breaker = Policy
-                .Handle<HttpRequestException>()
-                .CircuitBreakerAsync(3, TimeSpan.FromSeconds(15));
+        //    var breaker = Policy
+        //        .Handle<HttpRequestException>()
+        //        .CircuitBreakerAsync(3, TimeSpan.FromSeconds(15));
 
-            return Policy.WrapAsync(retry, breaker);
-        }
+        //    return Policy.WrapAsync(retry, breaker);
+        //}
 
     }
 }
