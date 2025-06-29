@@ -19,7 +19,7 @@ namespace Northwind.API.Controllers.v1
             Console.WriteLine("########################################");
             //throw new Exception("new Exception");
             //500 Retry
-            //return StatusCode(500, "Custom internal server error");
+            return StatusCode(500, "Custom internal server error");
             //Timeout Retry
             //await Task.Delay(5000); // Simulate long operation (5 seconds
             //No timeout

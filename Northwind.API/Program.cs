@@ -15,9 +15,10 @@ builder.Services.AddHttpClient("NorthwindClient", client =>
     //client.BaseAddress = new Uri("https://data-northwind.indigo.design/");
     client.BaseAddress = new Uri("https://localhost:7030/api/v1/");
 })
- .AddTransientHttpErrorPolicy(p =>
-        p.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2)))
-.AddPolicyHandler(RetryPolicies.GetRetryPolicy());
+// .AddTransientHttpErrorPolicy(p =>
+//        p.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2)))
+//.AddPolicyHandler(RetryPolicies.GetRetryPolicy());
+.AddPolicyHandler(RetryPolicies.GetCircuitBreakerPolicy());
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
